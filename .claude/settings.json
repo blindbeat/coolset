@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'cd \"$CLAUDE_PROJECT_DIR\" && pnpm run check || exit 2'",
+            "timeout": 120
+          }
+        ]
+      }
+    ]
+  }
+}
