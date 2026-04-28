@@ -4,9 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Stack
 
-Vite 8 + React 19 + TypeScript 6, **oxlint** 1.x for linting (config in `.oxlintrc.json`), **oxfmt** for formatting. Package manager is **pnpm** (a `pnpm-lock.yaml` is present — do not introduce `npm` or `yarn` lockfiles).
+Vite 8 + React 19 + TypeScript 6, **oxlint** 1.x for linting (config in `.oxlintrc.json`), **oxfmt** for formatting. **Tailwind CSS v4** via `@tailwindcss/vite` (CSS-first config — no `tailwind.config.js`, customize via `@theme` in CSS if needed). Package manager is **pnpm** (a `pnpm-lock.yaml` is present — do not introduce `npm` or `yarn` lockfiles).
 
-No test framework is wired up. There is no router, state library, or styling system beyond hand-written CSS in `src/App.css` and `src/index.css`.
+No test framework is wired up. There is no router or state library. Styling is Tailwind utilities plus hand-written CSS variables and base styles in `src/App.css` and `src/index.css` (Tailwind imported at the top of `index.css`).
 
 ## Commands
 
