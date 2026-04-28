@@ -13,3 +13,4 @@ Brief log of dialog turns: what was done and why. Updated only when the user exp
 - Installed and set up Tailwind CSS v4 (via `@tailwindcss/vite`, CSS-first, no JS config). `CLAUDE.md` updated.
 - Added a Stop hook (`.claude/settings.json`) running `pnpm run check` before turn end so formatting/lint/types regressions block the agent.
 - Stripped Vite default boilerplate down to a centered "hello world". Removed demo assets, `App.css`, and the custom CSS in `index.css`.
+- Added `.oxfmtrc.json` enabling oxfmt's built-in Tailwind class sorting (reads theme from `src/index.css`, recognizes `clsx`/`cn`). Added `@tanstack/react-table`, `clsx`, and `tailwind-merge` dependencies.
