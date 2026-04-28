@@ -1,7 +1,9 @@
+import GroceryTable from "./features/grocery-table/grocery-table";
+
 function App() {
   return (
-    <div className="flex min-h-screen items-center justify-center">
-      <h1 className="text-4xl font-semibold">hello world</h1>
+    <div className="mx-auto max-w-5xl px-6 py-12">
+      <GroceryTable />
     </div>
   );
 }
