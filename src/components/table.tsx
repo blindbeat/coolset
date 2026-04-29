@@ -7,9 +7,7 @@ import { cn } from "../lib/utils";
 import { Pagination } from "./pagination";
 
 export function TableContainer({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div className={cn("overflow-auto rounded-t border border-slate-200", className)} {...props} />
-  );
+  return <div className={cn("overflow-auto rounded-t border", className)} {...props} />;
 }
 
 export function Table({ className, ...props }: React.ComponentProps<"table">) {
@@ -66,7 +64,7 @@ export function TableHead<TData = unknown>({
           : style
       }
       className={cn(
-        "h-10 border-r border-b border-slate-200 px-4 py-1 text-left align-middle font-semibold text-zinc-500 last:border-r-0",
+        "h-10 border-r border-b px-4 py-1 text-left align-middle font-semibold text-zinc-500 last:border-r-0",
         header?.column.getIsPinned() === "left" && "sticky z-20 bg-white shadow-pinned",
         className,
       )}
@@ -82,9 +80,9 @@ export function TableHead<TData = unknown>({
             aria-label="Sort"
           >
             {header.column.getIsSorted() === "asc" ? (
-              <ArrowUp className="size-4 text-slate-950" />
+              <ArrowUp className="size-4 text-foreground" />
             ) : header.column.getIsSorted() === "desc" ? (
-              <ArrowDown className="size-4 text-slate-950" />
+              <ArrowDown className="size-4 text-foreground" />
             ) : (
               <ArrowUpDown className="size-4" />
             )}
@@ -103,7 +101,7 @@ export function TableHead<TData = unknown>({
             }
             aria-pressed={header.column.getIsPinned() === "left"}
             aria-label="Pin column"
-            className={cn(header.column.getIsPinned() === "left" && "text-slate-950")}
+            className={cn(header.column.getIsPinned() === "left" && "text-foreground")}
           >
             <Pin className="size-4" />
           </Button>
@@ -131,7 +129,7 @@ export function TableCell<TData = unknown>({
           : style
       }
       className={cn(
-        "h-12 border-r border-b border-slate-200 px-4 align-middle text-slate-950 last:border-r-0",
+        "h-12 border-r border-b px-4 align-middle last:border-r-0",
         cell?.column.getIsPinned() === "left" && "sticky z-1 bg-white shadow-pinned",
         className,
       )}
