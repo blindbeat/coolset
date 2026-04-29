@@ -113,7 +113,7 @@ export default function GroceryTable() {
           value={table.getColumn("section")?.getFilterValue() ?? null}
           onValueChange={(v) => table.getColumn("section")?.setFilterValue(v ?? undefined)}
         >
-          <SelectTrigger size="sm" className="font-label">
+          <SelectTrigger size="sm" aria-label="Filter by section" className="font-label">
             <SelectValue placeholder="All sections" />
           </SelectTrigger>
           <SelectContent>
