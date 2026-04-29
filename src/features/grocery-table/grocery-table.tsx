@@ -1,4 +1,4 @@
-import type { RowData } from "@tanstack/react-table";
+import type { ColumnPinningState, RowData } from "@tanstack/react-table";
 import {
   createColumnHelper,
   flexRender,
@@ -8,6 +8,10 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import { useState } from "react";
+
+import { useIsViewportBelow } from "@/hooks/use-is-viewport-below";
+
 import { cn } from "../../lib/utils";
 
 import {
@@ -75,9 +79,18 @@ const columns = [
 ];
 
 export default function GroceryTable() {
+  const isNarrow = useIsViewportBelow(768);
+  const [manualPinning, setManualPinning] = useState<ColumnPinningState | null>(null);
+  const autoPinning: ColumnPinningState = { left: isNarrow ? ["name"] : [] };
+  const effectivePinning = manualPinning ?? autoPinning;
+
   const table = useReactTable({
     data: processedGroceries,
     columns,
+    state: { columnPinning: effectivePinning },
+    onColumnPinningChange: (updater) => {
+      setManualPinning(typeof updater === "function" ? updater(effectivePinning) : updater);
+    },
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getSortedRowModel: getSortedRowModel(),
