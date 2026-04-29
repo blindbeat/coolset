@@ -92,10 +92,7 @@ export default function GroceryTable() {
     getFilteredRowModel: getFilteredRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    initialState: {
-      pagination: { pageSize: 10 },
-      columnPinning: { left: ["name"] },
-    },
+    initialState: { pagination: { pageSize: 10 } },
   });
 
   return (
