@@ -59,8 +59,13 @@ const numberFmt = new Intl.NumberFormat(undefined, {
   maximumFractionDigits: 2,
 });
 
+const nameCollator = new Intl.Collator(undefined, { sensitivity: "base", numeric: true });
+
 const columns = [
-  columnHelper.accessor("name", { header: "Name" }),
+  columnHelper.accessor("name", {
+    header: "Name",
+    sortingFn: (a, b, id) => nameCollator.compare(a.getValue(id), b.getValue(id)),
+  }),
   columnHelper.accessor("section", {
     header: "Section",
     filterFn: "equalsString",
