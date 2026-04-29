@@ -5,6 +5,7 @@ import {
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
+  getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
@@ -59,6 +60,7 @@ const columns = [
   columnHelper.accessor("section", {
     header: "Section",
     filterFn: "equalsString",
+    enableSorting: false,
   }),
   columnHelper.accessor("price", {
     header: "Price (€)",
@@ -86,6 +88,7 @@ export default function GroceryTable() {
     state: { columnFilters },
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
+    getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     initialState: { pagination: { pageSize: 10 } },
   });
@@ -116,7 +119,7 @@ export default function GroceryTable() {
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id}>
+                  <TableHead key={header.id} header={header}>
                     {header.isPlaceholder
                       ? null
                       : flexRender(header.column.columnDef.header, header.getContext())}

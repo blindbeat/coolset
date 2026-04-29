@@ -1,4 +1,5 @@
-import type { Table as TanStackTable } from "@tanstack/react-table";
+import type { Header, Table as TanStackTable } from "@tanstack/react-table";
+import { ArrowDown, ArrowUp, ArrowUpDown } from "lucide-react";
 import type * as React from "react";
 
 import { cn } from "../lib/utils";
@@ -34,16 +35,52 @@ export function TableRow({ className, ...props }: React.ComponentProps<"tr">) {
   return <tr className={className} {...props} />;
 }
 
-export function TableHead({ className, scope = "col", ...props }: React.ComponentProps<"th">) {
+type TableHeadProps<TData> = React.ComponentProps<"th"> & {
+  header?: Header<TData, unknown>;
+};
+
+export function TableHead<TData = unknown>({
+  className,
+  scope = "col",
+  header,
+  children,
+  ...props
+}: TableHeadProps<TData>) {
   return (
     <th
       scope={scope}
+      aria-sort={
+        header?.column.getCanSort()
+          ? header.column.getIsSorted() === "asc"
+            ? "ascending"
+            : header.column.getIsSorted() === "desc"
+              ? "descending"
+              : "none"
+          : undefined
+      }
+      onClick={header?.column.getCanSort() ? header.column.getToggleSortingHandler() : undefined}
       className={cn(
         "h-10 border-r border-b border-slate-200 px-4 py-1 text-left align-middle font-semibold text-zinc-500 last:border-r-0",
+        header?.column.getCanSort() && "cursor-pointer select-none hover:text-zinc-700",
         className,
       )}
       {...props}
-    />
+    >
+      <span className="flex items-center gap-2">
+        {header?.column.getCanSort() ? (
+          <span className="flex size-4 shrink-0 items-center justify-center">
+            {header.column.getIsSorted() === "asc" ? (
+              <ArrowUp className="size-4 text-slate-950" />
+            ) : header.column.getIsSorted() === "desc" ? (
+              <ArrowDown className="size-4 text-slate-950" />
+            ) : (
+              <ArrowUpDown className="size-4" />
+            )}
+          </span>
+        ) : null}
+        <span className="min-w-0 flex-1 truncate">{children}</span>
+      </span>
+    </th>
   );
 }
 
