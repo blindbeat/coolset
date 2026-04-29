@@ -45,9 +45,7 @@ const processedGroceries = groceries.map((g) => ({
 
 type Grocery = (typeof processedGroceries)[number];
 
-const SECTIONS = Array.from(
-  new Set(processedGroceries.map((g) => g.section)),
-).sort();
+const SECTIONS = Array.from(new Set(processedGroceries.map((g) => g.section))).sort();
 
 const columnHelper = createColumnHelper<Grocery>();
 
@@ -121,10 +119,7 @@ export default function GroceryTable() {
                   <TableHead key={header.id}>
                     {header.isPlaceholder
                       ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext(),
-                        )}
+                      : flexRender(header.column.columnDef.header, header.getContext())}
                   </TableHead>
                 ))}
               </TableRow>
@@ -136,11 +131,7 @@ export default function GroceryTable() {
                 {row.getVisibleCells().map((cell) => (
                   <TableCell
                     key={cell.id}
-                    className={
-                      cell.column.columnDef.meta?.numeric
-                        ? "text-right tabular-nums"
-                        : ""
-                    }
+                    className={cell.column.columnDef.meta?.numeric ? "text-right tabular-nums" : ""}
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
