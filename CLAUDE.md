@@ -16,11 +16,11 @@ No test framework is wired up. There is no router or state library. Styling is T
 - `pnpm fix` — oxlint with `--fix` (auto-applies fixable lint issues).
 - `pnpm format` — oxfmt over the repo.
 - `pnpm format:check` — oxfmt in check mode (fails if anything is unformatted).
-- `pnpm typecheck` — `tsc -b` (project-reference build, no bundle).
+- `pnpm typecheck` — `tsgo -b` (project-reference build via the Go-based TypeScript compiler from `@typescript/native-preview`, no bundle).
 - `pnpm check` — runs `lint`, `format:check`, and `typecheck` in sequence; this is the gate `build` enforces.
 - `pnpm preview` — preview the production build.
 
-Use `pnpm exec tsc -b --force` to bypass the TypeScript build cache in `node_modules/.tmp/` if needed.
+Use `pnpm exec tsgo -b --force` to bypass the TypeScript build cache in `node_modules/.tmp/` if needed.
 
 ## Figma designs
 

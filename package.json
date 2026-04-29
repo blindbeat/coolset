@@ -10,7 +10,7 @@
     "fix": "oxlint --fix",
     "format": "oxfmt",
     "format:check": "oxfmt --check",
-    "typecheck": "tsc -b",
+    "typecheck": "tsgo -b",
     "check": "pnpm lint && pnpm format:check && pnpm typecheck",
     "preview": "vite preview"
   },
@@ -26,6 +26,7 @@
     "@types/node": "^24.12.2",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "@typescript/native-preview": "beta",
     "@vitejs/plugin-react": "^6.0.1",
     "oxfmt": "latest",
     "oxlint": "^1.62.0",
