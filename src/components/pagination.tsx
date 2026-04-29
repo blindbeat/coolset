@@ -29,7 +29,7 @@ export function Pagination({
   const to = Math.min(from + pageSize - 1, total);
 
   return (
-    <div className="flex items-center gap-8 pt-4">
+    <div className="flex flex-wrap items-center gap-x-8 gap-y-3 pt-4">
       <label className="flex items-center gap-1">
         <span className="text-xs text-zinc-500">Rows per page:</span>
         <span className="relative inline-flex">
