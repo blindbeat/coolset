@@ -3,6 +3,7 @@ import {
   createColumnHelper,
   flexRender,
   getCoreRowModel,
+  getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 
@@ -12,6 +13,7 @@ import {
   TableCell,
   TableHead,
   TableHeader,
+  TablePagination,
   TableRow,
 } from "../../components/table";
 
@@ -59,6 +61,8 @@ export default function GroceryTable() {
     data: processedGroceries,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    initialState: { pagination: { pageSize: 10 } },
   });
 
   return (
@@ -95,6 +99,7 @@ export default function GroceryTable() {
           ))}
         </TableBody>
       </Table>
+      <TablePagination table={table} />
     </div>
   );
 }

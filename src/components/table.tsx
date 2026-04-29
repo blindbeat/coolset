@@ -1,6 +1,8 @@
+import type { Table as TanStackTable } from "@tanstack/react-table";
 import type * as React from "react";
 
 import { cn } from "../lib/utils";
+import { Pagination } from "./pagination";
 
 export function Table({ className, ...props }: React.ComponentProps<"table">) {
   return (
@@ -43,6 +45,25 @@ export function TableCell({ className, ...props }: React.ComponentProps<"td">) {
         className,
       )}
       {...props}
+    />
+  );
+}
+
+type TablePaginationProps<TData> = {
+  table: TanStackTable<TData>;
+};
+
+export function TablePagination<TData>({ table }: TablePaginationProps<TData>) {
+  return (
+    <Pagination
+      pageIndex={table.getState().pagination.pageIndex}
+      pageSize={table.getState().pagination.pageSize}
+      total={table.getRowCount()}
+      canPrevious={table.getCanPreviousPage()}
+      canNext={table.getCanNextPage()}
+      onPrevious={() => table.previousPage()}
+      onNext={() => table.nextPage()}
+      onPageSizeChange={(size) => table.setPageSize(size)}
     />
   );
 }
