@@ -1,5 +1,7 @@
 import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 
+import { Button } from "@/components/ui/button";
+
 const PAGE_SIZE_OPTIONS = [10, 25, 50];
 
 type PaginationProps = {
@@ -53,24 +55,28 @@ export function Pagination({
         <span className="text-xs text-zinc-500">
           {from}-{to} of {total}
         </span>
-        <button
+        <Button
           type="button"
+          variant="ghost"
+          size="icon-sm"
           onClick={onPrevious}
           disabled={!canPrevious}
           aria-label="Previous page"
-          className="text-zinc-500 disabled:opacity-40"
+          className="text-zinc-500"
         >
-          <ChevronLeft size={20} />
-        </button>
-        <button
+          <ChevronLeft className="size-5" />
+        </Button>
+        <Button
           type="button"
+          variant="ghost"
+          size="icon-sm"
           onClick={onNext}
           disabled={!canNext}
           aria-label="Next page"
-          className="text-zinc-500 disabled:opacity-40"
+          className="text-zinc-500"
         >
-          <ChevronRight size={20} />
-        </button>
+          <ChevronRight className="size-5" />
+        </Button>
       </div>
     </div>
   );
