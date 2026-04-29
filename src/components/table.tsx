@@ -64,7 +64,7 @@ export function TableHead<TData = unknown>({
           : style
       }
       className={cn(
-        "h-10 border-r border-b px-4 py-1 text-left align-middle font-semibold text-zinc-500 last:border-r-0",
+        "h-10 border-r border-b px-4 py-1 text-left align-middle font-label font-semibold text-zinc-500 last:border-r-0",
         header?.column.getIsPinned() === "left" && "sticky z-20 bg-white shadow-pinned",
         className,
       )}

@@ -101,12 +101,14 @@ export default function GroceryTable() {
   return (
     <div className="flex min-h-0 w-full flex-1 flex-col">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
-        <h2 className="text-[0.9375rem] font-medium tracking-tight">Today's groceries</h2>
+        <h2 className="font-label text-[0.9375rem] font-medium tracking-tight">
+          Today's groceries
+        </h2>
         <Select
           value={table.getColumn("section")?.getFilterValue() ?? null}
           onValueChange={(v) => table.getColumn("section")?.setFilterValue(v ?? undefined)}
         >
-          <SelectTrigger size="sm">
+          <SelectTrigger size="sm" className="font-label">
             <SelectValue placeholder="All sections" />
           </SelectTrigger>
           <SelectContent>
