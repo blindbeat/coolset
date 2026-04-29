@@ -1,6 +1,6 @@
 # Dialog Log
 
-Brief log of dialog turns: what was done and why. Updated only when the user explicitly asks.
+One paragraph per entry — what changed and why, in plain prose. Update only when asked.
 
 ## 2026-04-28
 
@@ -18,3 +18,4 @@ Brief log of dialog turns: what was done and why. Updated only when the user exp
 - Switched typechecking from `tsc` to `tsgo`, the new Go-based TypeScript compiler from Microsoft. Pinned to the `beta` channel so it tracks upstream as it stabilizes. Confirmed it actually catches errors (not just exiting silently) and updated `CLAUDE.md`.
 - Added pagination to the grocery table per the Figma reference, using Lucide for the chevrons. The component splits in two: a presentational `Pagination` that takes plain props (page index/size, totals, handlers) and a thin `TablePagination` wrapper that consumes a TanStack `Table` instance and forwards the right state — so the feature site is just `<TablePagination table={table} />`.
 - Installed shadcn/ui with the Base UI flavor. The critical flag was `--base base` on `init` — missed on the first try, which silently produced a Radix-based preset and required a clean re-run. Added the shadcn `Button` component and used it for the pagination's prev/next chevrons; dropped the `asChild` prop and the `radix-ui` dep since nothing needs polymorphic rendering yet.
+- Made the grocery table scroll inside its own box with a sticky header. The page is now capped at viewport height so the table is what overflows, not the page. Few rows hug their content (no empty space below), many rows shrink the table and scroll under the header. Pulled the scroll wrapper out into its own `TableContainer` so callers size it directly. Borders broke once the header went sticky — `border-collapse` paints lines on the table grid, not on the cells that move — so the table is now `border-separate` with the grid lines moved onto the cells themselves. They travel with the sticky header and stay 1px because each line is owned by only one side of any cell pair.

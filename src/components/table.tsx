@@ -4,16 +4,26 @@ import type * as React from "react";
 import { cn } from "../lib/utils";
 import { Pagination } from "./pagination";
 
+export function TableContainer({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div className={cn("overflow-auto rounded-t border border-slate-200", className)} {...props} />
+  );
+}
+
 export function Table({ className, ...props }: React.ComponentProps<"table">) {
   return (
-    <div className="overflow-hidden rounded-t border border-slate-200">
-      <table className={cn("w-full border-collapse text-xs", className)} {...props} />
-    </div>
+    <table
+      className={cn(
+        "w-full border-separate border-spacing-0 text-xs [&_tbody_tr:last-child_td]:border-b-0",
+        className,
+      )}
+      {...props}
+    />
   );
 }
 
 export function TableHeader({ className, ...props }: React.ComponentProps<"thead">) {
-  return <thead className={cn("border-b border-slate-200", className)} {...props} />;
+  return <thead className={cn("sticky top-0 z-10 bg-white", className)} {...props} />;
 }
 
 export function TableBody({ className, ...props }: React.ComponentProps<"tbody">) {
@@ -21,7 +31,7 @@ export function TableBody({ className, ...props }: React.ComponentProps<"tbody">
 }
 
 export function TableRow({ className, ...props }: React.ComponentProps<"tr">) {
-  return <tr className={cn("border-b border-slate-200 last:border-b-0", className)} {...props} />;
+  return <tr className={className} {...props} />;
 }
 
 export function TableHead({ className, scope = "col", ...props }: React.ComponentProps<"th">) {
@@ -29,7 +39,7 @@ export function TableHead({ className, scope = "col", ...props }: React.Componen
     <th
       scope={scope}
       className={cn(
-        "h-10 border-r border-slate-200 px-4 py-1 text-left align-middle font-semibold text-zinc-500 last:border-r-0",
+        "h-10 border-r border-b border-slate-200 px-4 py-1 text-left align-middle font-semibold text-zinc-500 last:border-r-0",
         className,
       )}
       {...props}
@@ -41,7 +51,7 @@ export function TableCell({ className, ...props }: React.ComponentProps<"td">) {
   return (
     <td
       className={cn(
-        "h-12 border-r border-slate-200 px-4 align-middle text-slate-950 last:border-r-0",
+        "h-12 border-r border-b border-slate-200 px-4 align-middle text-slate-950 last:border-r-0",
         className,
       )}
       {...props}
