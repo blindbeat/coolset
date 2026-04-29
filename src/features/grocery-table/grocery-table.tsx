@@ -3,9 +3,19 @@ import {
   createColumnHelper,
   flexRender,
   getCoreRowModel,
+  getFilteredRowModel,
   getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import { useMemo, useState } from "react";
+
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 import {
   Table,
@@ -35,6 +45,10 @@ const processedGroceries = groceries.map((g) => ({
 
 type Grocery = (typeof processedGroceries)[number];
 
+const SECTIONS = Array.from(
+  new Set(processedGroceries.map((g) => g.section)),
+).sort();
+
 const columnHelper = createColumnHelper<Grocery>();
 
 const numberFmt = new Intl.NumberFormat(undefined, {
@@ -44,7 +58,10 @@ const numberFmt = new Intl.NumberFormat(undefined, {
 
 const columns = [
   columnHelper.accessor("name", { header: "Name" }),
-  columnHelper.accessor("section", { header: "Section" }),
+  columnHelper.accessor("section", {
+    header: "Section",
+    filterFn: "equalsString",
+  }),
   columnHelper.accessor("price", {
     header: "Price (€)",
     cell: ({ getValue }) => numberFmt.format(getValue()),
@@ -58,19 +75,43 @@ const columns = [
 ];
 
 export default function GroceryTable() {
+  const [section, setSection] = useState<string | null>(null);
+
+  const columnFilters = useMemo(
+    () => (section !== null ? [{ id: "section", value: section }] : []),
+    [section],
+  );
+
   const table = useReactTable({
     data: processedGroceries,
     columns,
+    state: { columnFilters },
     getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     initialState: { pagination: { pageSize: 10 } },
   });
 
   return (
     <div className="flex min-h-0 w-full flex-1 flex-col">
-      <h2 className="mb-12 text-[0.9375rem] font-medium tracking-tight text-slate-950">
-        Today's groceries
-      </h2>
+      <div className="mb-12 flex items-center justify-between">
+        <h2 className="text-[0.9375rem] font-medium tracking-tight text-slate-950">
+          Today's groceries
+        </h2>
+        <Select value={section} onValueChange={(v) => setSection(v)}>
+          <SelectTrigger size="sm">
+            <SelectValue placeholder="All sections" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value={null}>All sections</SelectItem>
+            {SECTIONS.map((s) => (
+              <SelectItem key={s} value={s}>
+                {s}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
       <TableContainer className="min-h-0">
         <Table>
           <TableHeader>
@@ -80,7 +121,10 @@ export default function GroceryTable() {
                   <TableHead key={header.id}>
                     {header.isPlaceholder
                       ? null
-                      : flexRender(header.column.columnDef.header, header.getContext())}
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
                   </TableHead>
                 ))}
               </TableRow>
@@ -92,7 +136,11 @@ export default function GroceryTable() {
                 {row.getVisibleCells().map((cell) => (
                   <TableCell
                     key={cell.id}
-                    className={cell.column.columnDef.meta?.numeric ? "text-right tabular-nums" : ""}
+                    className={
+                      cell.column.columnDef.meta?.numeric
+                        ? "text-right tabular-nums"
+                        : ""
+                    }
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
