@@ -1,6 +1,13 @@
-import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const PAGE_SIZE_OPTIONS = [10, 25, 50];
 
@@ -30,27 +37,21 @@ export function Pagination({
 
   return (
     <div className="flex flex-wrap items-center gap-x-8 gap-y-3 pt-4">
-      <label className="flex items-center gap-1">
+      <div className="flex items-center gap-1">
         <span className="text-xs text-zinc-500">Rows per page:</span>
-        <span className="relative inline-flex">
-          <select
-            value={pageSize}
-            onChange={(e) => onPageSizeChange(Number(e.target.value))}
-            className="h-8 appearance-none rounded bg-white pr-7 pl-3 text-[0.8125rem] text-slate-950"
-          >
+        <Select value={pageSize} onValueChange={(v) => v !== null && onPageSizeChange(v)}>
+          <SelectTrigger size="sm" aria-label="Rows per page">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
             {PAGE_SIZE_OPTIONS.map((n) => (
-              <option key={n} value={n}>
+              <SelectItem key={n} value={n}>
                 {n}
-              </option>
+              </SelectItem>
             ))}
-          </select>
-          <ChevronDown
-            size={20}
-            aria-hidden
-            className="pointer-events-none absolute top-1/2 right-2 -translate-y-1/2 text-zinc-500"
-          />
-        </span>
-      </label>
+          </SelectContent>
+        </Select>
+      </div>
       <div className="flex items-center gap-2">
         <span className="text-xs text-zinc-500">
           {from}-{to} of {total}
