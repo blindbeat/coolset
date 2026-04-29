@@ -10,6 +10,8 @@ import {
 } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
 
+import { cn } from "../../lib/utils";
+
 import {
   Select,
   SelectContent,
@@ -90,12 +92,15 @@ export default function GroceryTable() {
     getFilteredRowModel: getFilteredRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    initialState: { pagination: { pageSize: 10 } },
+    initialState: {
+      pagination: { pageSize: 10 },
+      columnPinning: { left: ["name"] },
+    },
   });
 
   return (
     <div className="flex min-h-0 w-full flex-1 flex-col">
-      <div className="mb-12 flex items-center justify-between">
+      <div className="mb-4 flex items-center justify-between">
         <h2 className="text-[0.9375rem] font-medium tracking-tight text-slate-950">
           Today's groceries
         </h2>
@@ -134,7 +139,8 @@ export default function GroceryTable() {
                 {row.getVisibleCells().map((cell) => (
                   <TableCell
                     key={cell.id}
-                    className={cell.column.columnDef.meta?.numeric ? "text-right tabular-nums" : ""}
+                    cell={cell}
+                    className={cn(cell.column.columnDef.meta?.numeric && "text-right tabular-nums")}
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>

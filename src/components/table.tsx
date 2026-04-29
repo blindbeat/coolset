@@ -1,6 +1,5 @@
-import type { Header, Table as TanStackTable } from "@tanstack/react-table";
+import type { Cell, Header, Table as TanStackTable } from "@tanstack/react-table";
 import { ArrowDown, ArrowUp, ArrowUpDown } from "lucide-react";
-import type * as React from "react";
 
 import { cn } from "../lib/utils";
 import { Pagination } from "./pagination";
@@ -44,6 +43,7 @@ export function TableHead<TData = unknown>({
   scope = "col",
   header,
   children,
+  style,
   ...props
 }: TableHeadProps<TData>) {
   return (
@@ -59,9 +59,15 @@ export function TableHead<TData = unknown>({
           : undefined
       }
       onClick={header?.column.getCanSort() ? header.column.getToggleSortingHandler() : undefined}
+      style={
+        header?.column.getIsPinned() === "left"
+          ? { left: header.getStart("left"), ...style }
+          : style
+      }
       className={cn(
         "h-10 border-r border-b border-slate-200 px-4 py-1 text-left align-middle font-semibold text-zinc-500 last:border-r-0",
         header?.column.getCanSort() && "cursor-pointer select-none hover:text-zinc-700",
+        header?.column.getIsPinned() === "left" && "sticky z-20 bg-white",
         className,
       )}
       {...props}
@@ -84,11 +90,26 @@ export function TableHead<TData = unknown>({
   );
 }
 
-export function TableCell({ className, ...props }: React.ComponentProps<"td">) {
+type TableCellProps<TData> = React.ComponentProps<"td"> & {
+  cell?: Cell<TData, unknown>;
+};
+
+export function TableCell<TData = unknown>({
+  className,
+  cell,
+  style,
+  ...props
+}: TableCellProps<TData>) {
   return (
     <td
+      style={
+        cell?.column.getIsPinned() === "left"
+          ? { left: cell.column.getStart("left"), ...style }
+          : style
+      }
       className={cn(
         "h-12 border-r border-b border-slate-200 px-4 align-middle text-slate-950 last:border-r-0",
+        cell?.column.getIsPinned() === "left" && "sticky z-1 bg-white",
         className,
       )}
       {...props}
